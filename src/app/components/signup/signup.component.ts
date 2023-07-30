@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { CommonService } from './../../commonServices/common.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -34,26 +35,18 @@ export class SignupComponent implements OnInit {
       email: this.signUp.value.email,
       password: this.signUp.value.password
     };
-    
-    this.CommonService.signup('http://example.com/api/signup', formData).subscribe(
+console.log("1",formData)
+    this.CommonService.signup(formData).subscribe(
       result => {
         console.log(result);
-        
+
     },
-    (err) => {
-      console.log(err);
-      
+    (error: HttpErrorResponse) => {
+      console.log(error.error); // Log the error response
+      console.log(error.status); // Log the HTTP status code
+      // Handle error, e.g., display an error message
     }
     )
-
-    // this.apiService.signup(formData).subscribe(
-    //   response => {
-    //     // Handle successful signup
-    //   },
-    //   error => {
-    //     // Handle error during signup
-    //   }
-    // );
     }
   }
 }
